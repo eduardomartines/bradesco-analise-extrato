@@ -1,9 +1,9 @@
-# bank-statement-analysis
+# bradesco-analise-extrato
 
-## How to use
+## Como usar
 
 ``
-python bank.py search_key_word
+python bank.py mercado
 ``
 
-## The rest is under development...
+## Continua...
