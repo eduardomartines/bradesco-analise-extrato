@@ -2,11 +2,15 @@
 
 ## Como usar
 
-* Baixe o extrato do Bradesco em formato csv
-* Execute o comando abaixo para buscar e fazer a análise:
+* Baixe o extrato do Bradesco em formato csv e salve como ``extrato.csv``
+* Execute o comando ``python bank.py palavra-chave`` para obter a análise
 
-``
-python bank.py mercadoX
-``
+## Exemplos
 
-## Continua...
+```
+python bank.py rendimentos
+  
+python bank.py pao de acucar
+
+python bank.py vivo
+```
