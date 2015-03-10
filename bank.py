@@ -54,9 +54,10 @@ for i in xrange(0, len(mouth_year_keys)):
   value = mouth_year_values[i]
   value_text = 'R$ {:,.2f}'.format(value).replace(',', '|').replace('.', ',').replace('|', '.')
   partial_total = mouth_partial_values[i]
-  partial_total_text = 'R$ {:,.2f}'.format(partial_total)
-  bla = (float(value)*100/float(partial_total))
-  bla_text = '{:,.2f}%'.format(bla)
+  if partial_total:
+    partial_total_text = 'R$ {:,.2f}'.format(partial_total)
+    bla = (float(value)*100/float(partial_total))
+    bla_text = '{:,.2f}%'.format(bla)
   percentage = (float(value)*100/float(total))
   percentage_text = '\t\t{:,.2f}%'.format(percentage) + ' (' + total_text + ')     ' + bla_text + ' (' + partial_total_text + ')'
   print '\t' + mouth_text + value_text + percentage_text
