@@ -7,10 +7,10 @@
 
 ## Exemplos
 
-``
+```
 python bank.py rendimentos
-
+  
 python bank.py pao de acucar
 
 python bank.py vivo
-``
+```
