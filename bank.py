@@ -16,6 +16,8 @@ with open(file_name, 'rU') as f:
 
     for row in reader:
       if search in str(row).lower():
+        if '/' in row[0]:
+          prev_line = row
         mouth_year = prev_line[0].split('/')[1] + '/' + prev_line[0].split('/')[2]
         amount_match = prev_line[3] or prev_line[4]
         amount = amount_match.replace('.', '')
