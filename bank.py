@@ -62,8 +62,10 @@ for i in xrange(0, len(mouth_year_keys)):
   percentage_text = '\t\t{:,.2f}%'.format(percentage) + ' (' + total_text + ')     ' + bla_text + ' (' + partial_total_text + ')'
   print '\t' + mouth_text + value_text + percentage_text
 
+test = (float(total)*100/float(partial_total))
+
 print '\nTotal:'
-print '\t' + total_text
+print '\t' + total_text + '\t\t{:,.2f}%'.format(test) + ' (' + partial_total_text + ')'
 
 print '\nRegistros:'
 for item in mouth_year_lines:
