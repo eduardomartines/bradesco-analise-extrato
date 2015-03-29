@@ -19,11 +19,31 @@
             var _b = new Date(parseInt(b.split('/')[1]) + 2000, parseInt(b.split('/')[0]), 1);
             return _a - _b;
           });
-          $('table tbody').html('');
+          $('#f1 table tbody').html('');
           $.each(keys, function (i, e){
-            $('body tbody').append('<tr><td>' + e + '</td><td>' + rows_group_by_month[e].length + '</td></tr>');
+            $('#f1 table tbody').append('<tr><td>' + e + '</td><td>' + rows_group_by_month[e].length + '</td></tr>');
           });
         }
+
+        $('#f2').hide();
+        $('#f2 tbody').html('');
+        $('#f2 #f2_total').html('');
+
+        $('#f2_search button').click(function() {
+          if ($('#f2_search input').val() != ''){
+            $('#f2').show();
+          }
+          else {
+            f2_hide();
+          }
+        });
+
+        function f2_hide(){
+          $('#f2').hide();
+          $('#f2_search input').val('');
+        }
+
+        $('#f2 #f2_hide').click(f2_hide);
 
         $.getJSON('rows_group_by_month.json', function (remote_rows_group_by_month) {
           rows_group_by_month = remote_rows_group_by_month;
@@ -34,15 +54,59 @@
   </head>
   <body>
     <div class="container">
-      <div class="header clearfix">
-        <h3 class="text-muted">Bradesco Análise de Extrato</h3>
+      <div class="page-header">
+        <h1>Bradesco <small>análise de extrato</small></h1>
       </div>
 
-      <hr />
+      <section class="col-md-8">
 
-      <section class="col-md-8"></section>
+        <div id="f2_search" class="input-group">
+          <input type="text" class="form-control" placeholder="Buscar por...">
+          <span class="input-group-btn">
+            <button class="btn btn-success" type="button">Buscar</button>
+          </span>
+        </div>
+
+        <br>
+
+        <div id="f2" class="panel panel-default">
+          <div class="panel-heading">
+            <button id="f2_hide" type="button" class="btn btn-danger btn-xs pull-right">
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </button>
+            Resultados para "Teste"
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Mês</th>
+                <th>Valor</th>
+                <th>Total Geral</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>01/14</td>
+                <td>R$ 306,01</td>
+                <td>0.41% (R$ 73,962.17)</td>
+                <td>3.48%</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td><b>Total</b></td>
+                <td></td>
+                <td></td>
+                <td><b id="f2_total">R$ 8,781.66</b></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </section>
+
       <section class="col-md-4">
-        <div class="panel panel-default">
+        <div id="f1" class="panel panel-default">
           <div class="panel-heading">Meses & Registros</div>
           <table class="table">
             <thead>
