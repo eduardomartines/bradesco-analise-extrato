@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <script>
+      $(function () {
+
+        var rows_group_by_month;
+
+        function print_f1(){
+          var keys = Object.keys(rows_group_by_month);
+          keys.sort(function (a, b) {
+            var _a = new Date(parseInt(a.split('/')[1]) + 2000, parseInt(a.split('/')[0]), 1);
+            var _b = new Date(parseInt(b.split('/')[1]) + 2000, parseInt(b.split('/')[0]), 1);
+            return _a - _b;
+          });
+          $('table tbody').html('');
+          $.each(keys, function (i, e){
+            $('body tbody').append('<tr><td>' + e + '</td><td>' + rows_group_by_month[e].length + '</td></tr>');
+          });
+        }
+
+        $.getJSON('rows_group_by_month.json', function (remote_rows_group_by_month) {
+          rows_group_by_month = remote_rows_group_by_month;
+          print_f1();
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header clearfix">
+        <h3 class="text-muted">Bradesco Análise de Extrato</h3>
+      </div>
+
+      <hr />
+
+      <section class="col-md-8"></section>
+      <section class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">Meses & Registros</div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Mês</th>
+                <th>Qtde Registros</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
