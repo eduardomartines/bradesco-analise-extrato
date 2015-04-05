@@ -10,10 +10,10 @@
     <script>
       $(function () {
 
-        var rows_group_by_month;
+        var months;
 
         function print_f1(){
-          var keys = Object.keys(rows_group_by_month);
+          var keys = Object.keys(months);
           keys.sort(function (a, b) {
             var _a = new Date(parseInt(a.split('/')[1]) + 2000, parseInt(a.split('/')[0]), 1);
             var _b = new Date(parseInt(b.split('/')[1]) + 2000, parseInt(b.split('/')[0]), 1);
@@ -21,32 +21,54 @@
           });
           $('#f1 table tbody').html('');
           $.each(keys, function (i, e){
-            $('#f1 table tbody').append('<tr><td>' + e + '</td><td>' + rows_group_by_month[e].length + '</td></tr>');
+            $('#f1 table tbody').append('<tr><td>' + e + '</td><td>' + months[e].length + '</td></tr>');
           });
         }
 
-        $('#f2').hide();
-        $('#f2 tbody').html('');
-        $('#f2 #f2_total').html('');
-
         $('#f2_search button').click(function() {
           if ($('#f2_search input').val() != ''){
-            $('#f2').show();
+            f2_search($('#f2_search input').val());
           }
           else {
             f2_hide();
           }
         });
 
+        f2_hide();
+
         function f2_hide(){
           $('#f2').hide();
-          $('#f2_search input').val('');
+          $('#f2 tbody').html('');
+          $('#f2 #f2_total').html('');
+        }
+
+        function f2_show(){
+          $('#f2').show();
+        }
+
+        function f2_search(key){
+          f2_hide();
+          $.getJSON('report/' + key + '.json', function (data) {
+            f2_print(data);
+          });
+        }
+
+        function f2_print(data){
+          data.keys_values = data.keys_values.sort(function (a, b) {
+            var _a = new Date(parseInt(a[0].split('/')[1]) + 2000, parseInt(a[0].split('/')[0]), 1);
+            var _b = new Date(parseInt(b[0].split('/')[1]) + 2000, parseInt(b[0].split('/')[0]), 1);
+            return _a - _b;
+          });
+          $.each(data.keys_values, function (i, e) {
+            $('#f2 tbody').append('<tr><td>' + e[0] + '</td><td>' + e[1] + '</td><td>' + e[2] + '</td><td>' + e[3] + '</td></tr>');
+          });
+          f2_show();
         }
 
         $('#f2 #f2_hide').click(f2_hide);
 
-        $.getJSON('rows_group_by_month.json', function (remote_rows_group_by_month) {
-          rows_group_by_month = remote_rows_group_by_month;
+        $.getJSON('months.json', function (remote_months) {
+          months = remote_months;
           print_f1();
         });
       });
