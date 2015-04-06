@@ -1,6 +1,7 @@
 # encoding: UTF-8
 
 import json
+from util import Util
 
 class R:
   def __init__(self, name):
@@ -23,15 +24,6 @@ class Report:
   def __init__(self, rows_by_period):
     self.__rows_by_period = rows_by_period
 
-  def __convert_to_float(self, _str):
-    __amount = _str.replace('.', '')
-    __amount = __amount.replace(',', '.')
-    __amount = float(__amount)
-    return __amount
-
-  def __get_as_reais(self, amount):
-    return 'R$ {:,.2f}'.format(amount)
-
   def simple(self, key):
     reportView = R('simple')
     reportView.keys.append('month')
@@ -50,8 +42,6 @@ class Report:
           else:
             filtered_rows_by_period[period] = [row]
 
-    print filtered_rows_by_period
-
     total = 0
 
     for period in filtered_rows_by_period:
@@ -60,25 +50,25 @@ class Report:
 
       for row in filtered_rows_by_period[period]:
         if row[3]:
-          amount += self.__convert_to_float(row[3])
+          amount += Util.convert_to_float(row[3])
         else:
-          amount += self.__convert_to_float(row[4])
+          amount += Util.convert_to_float(row[4])
         if row[5]:
-          partial_total = self.__convert_to_float(row[5])
+          partial_total = Util.convert_to_float(row[5])
 
       total += amount
 
       key_value = []
       key_value.append(period)
-      key_value.append(self.__get_as_reais(amount))
-      key_value.append(self.__get_as_reais(partial_total))
+      key_value.append(Util.get_as_reais(amount))
+      key_value.append(Util.get_as_reais(partial_total))
 
       key_value.append(0) # TODO
 
       reportView.keys_values.append(key_value)
 
     reportView.footer_values = []
-    reportView.footer_values.append(self.__get_as_reais(total))
+    reportView.footer_values.append(Util.get_as_reais(total))
     reportView.footer_values.append('')
     reportView.footer_values.append('')
 

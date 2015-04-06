@@ -74,6 +74,13 @@
           months = remote_months;
           print_f1();
         });
+
+        $.getJSON('basic_info.json', function (data) {
+          var basic_info = data;
+          $('#basic_info #basic_info_total').html(data.total);
+          $('#basic_info #basic_info_start_at').html(data.start_at);
+          $('#basic_info #basic_info_end_at').html(data.end_at);
+        });
       });
     </script>
   </head>
@@ -131,11 +138,11 @@
       </section>
 
       <section class="col-md-4">
-        <div class="panel panel-default">
+        <div id="basic_info" class="panel panel-default">
           <div class="panel-heading">Resumo</div>
           <div class="panel-body">
-            <p class="lead text-success">R$ 0.000,00</p>
-            <p>De <mark>01/14</mark> até <mark>03/15</mark></p>
+            <p id="basic_info_total" class="lead text-success">R$ 0.000,00</p>
+            <p>De <mark id="basic_info_start_at">01/14</mark> até <mark id="basic_info_end_at">03/15</mark></p>
           </div>
         </div>
 

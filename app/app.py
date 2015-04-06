@@ -49,6 +49,8 @@ class myHandler(BaseHTTPRequestHandler):
         elif 'report' in self.path:
           key = self.path.split('/')[-1].split('.')[0]
           self.wfile.write(json.dumps(report.simple(key), ensure_ascii=False))
+        elif 'basic_info' in self.path:
+          self.wfile.write(json.dumps(extract.get_basic_info(), ensure_ascii=False))
         return
       if sendReply == True:
         f = open(curdir + sep + self.path)
