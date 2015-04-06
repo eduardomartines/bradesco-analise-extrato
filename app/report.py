@@ -33,35 +33,46 @@ class Report:
     return 'R$ {:,.2f}'.format(amount)
 
   def simple(self, key):
-    __key = key
-    __r = R('simple')
-    __r.keys.append('month')
-    __r.keys.append('amount')
-    __r.keys.append('grand_total')
-    __r.keys.append('total')
-    __r.footer.append('total')
+    reportView = R('simple')
+    reportView.keys.append('month')
+    reportView.keys.append('amount')
+    reportView.keys.append('partial_total')
+    reportView.keys.append('grand_total')
+    reportView.footer.append('total')
 
-    __filtered_rows = []
+    filtered_rows_by_period = {}
 
     for period in self.__rows_by_period:
       for row in self.__rows_by_period[period]:
-        if key not in row[1].lower():
-          self.__rows_by_period[period].remove(row)
+        if key in row[1].lower():
+          if period in filtered_rows_by_period:
+            filtered_rows_by_period[period].append(row)
+          else:
+            filtered_rows_by_period[period] = [row]
 
-    for period in self.__rows_by_period:
-      __amount = 0
-      __grand_total = 0
-      for row in self.__rows_by_period[period]:
-        #print row
+    print filtered_rows_by_period
+
+    for period in filtered_rows_by_period:
+      amount = 0
+      partial_total = 0
+
+      for row in filtered_rows_by_period[period]:
         if row[3]:
-          __amount += self.__convert_to_float(row[3])
+          amount += self.__convert_to_float(row[3])
         else:
-          __amount += self.__convert_to_float(row[4])
+          amount += self.__convert_to_float(row[4])
         if row[5]:
-          __grand_total = self.__convert_to_float(row[5])
-      __key_value = [period, self.__get_as_reais(__amount), self.__get_as_reais(__grand_total), 0]
-      __r.keys_values.append(__key_value)
+          partial_total = self.__convert_to_float(row[5])
 
-    __r.footer_values = []
+      key_value = []
+      key_value.append(period)
+      key_value.append(self.__get_as_reais(amount))
+      key_value.append(self.__get_as_reais(partial_total))
 
-    return __r.get()
+      key_value.append(0) # TODO
+
+      reportView.keys_values.append(key_value)
+
+    reportView.footer_values = []
+
+    return reportView.get()
