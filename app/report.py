@@ -21,8 +21,9 @@ class R:
     return __result
 
 class Report:
-  def __init__(self, rows_by_period):
+  def __init__(self, rows_by_period, basic_info):
     self.__rows_by_period = rows_by_period
+    self.__basic_info = basic_info
 
   def simple(self, key):
     reportView = R('simple')
@@ -63,7 +64,7 @@ class Report:
       key_value.append(Util.get_as_reais(amount))
       key_value.append(Util.get_as_reais(partial_total))
 
-      key_value.append(0) # TODO
+      key_value.append(self.__basic_info['total'])
 
       reportView.keys_values.append(key_value)
 

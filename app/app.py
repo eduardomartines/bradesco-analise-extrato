@@ -10,9 +10,10 @@ from report import Report
 
 extract = Extract('extrato.csv')
 __rows = extract.get_rows()
+basic_info = extract.get_basic_info()
 
 methods = Methods(__rows)
-report = Report(methods.months())
+report = Report(methods.months(), basic_info)
 
 PORT_NUMBER = 8000
 
@@ -50,7 +51,7 @@ class myHandler(BaseHTTPRequestHandler):
           key = self.path.split('/')[-1].split('.')[0]
           self.wfile.write(json.dumps(report.simple(key), ensure_ascii=False))
         elif 'basic_info' in self.path:
-          self.wfile.write(json.dumps(extract.get_basic_info(), ensure_ascii=False))
+          self.wfile.write(json.dumps(basic_info, ensure_ascii=False))
         return
       if sendReply == True:
         f = open(curdir + sep + self.path)
