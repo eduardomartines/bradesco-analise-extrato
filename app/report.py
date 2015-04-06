@@ -52,6 +52,8 @@ class Report:
 
     print filtered_rows_by_period
 
+    total = 0
+
     for period in filtered_rows_by_period:
       amount = 0
       partial_total = 0
@@ -64,6 +66,8 @@ class Report:
         if row[5]:
           partial_total = self.__convert_to_float(row[5])
 
+      total += amount
+
       key_value = []
       key_value.append(period)
       key_value.append(self.__get_as_reais(amount))
@@ -74,5 +78,8 @@ class Report:
       reportView.keys_values.append(key_value)
 
     reportView.footer_values = []
+    reportView.footer_values.append(self.__get_as_reais(total))
+    reportView.footer_values.append('')
+    reportView.footer_values.append('')
 
     return reportView.get()
