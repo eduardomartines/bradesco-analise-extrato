@@ -20,7 +20,7 @@ PORT_NUMBER = 8000
 class myHandler(BaseHTTPRequestHandler):
   def do_GET(self):
     if self.path=='/':
-      self.path='/index.html'
+      self.path='/app/index.html'
     try:
       sendReply = False
       if self.path.endswith('.html'):
