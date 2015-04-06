@@ -60,13 +60,15 @@ class Report:
       total += amount
       grand_total = self.__basic_info['total']
 
-      amount_percentage = (float(amount)*100/float(partial_total))
-      grand_total_percentage = (float(amount)*100/Util.convert_to_float(grand_total))
-
       key_value = []
       key_value.append(period)
       key_value.append(Util.get_as_reais(amount))
-      key_value.append('{:,.2f}%'.format(amount_percentage) + ' (' + Util.get_as_reais(partial_total) + ')')
+      if partial_total:
+        amount_percentage = (float(amount)*100/float(partial_total))
+        key_value.append('{:,.2f}%'.format(amount_percentage) + ' (' + Util.get_as_reais(partial_total) + ')')
+      else:
+        key_value.append('')
+      grand_total_percentage = (float(amount)*100/Util.convert_to_float(grand_total))
       key_value.append('{:,.2f}%'.format(grand_total_percentage) + ' (' + grand_total + ')')
 
       reportView.keys_values.append(key_value)
