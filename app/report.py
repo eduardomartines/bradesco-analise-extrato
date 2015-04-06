@@ -26,6 +26,8 @@ class Report:
     self.__basic_info = basic_info
 
   def simple(self, key):
+    key = key.lower()
+
     reportView = R('simple')
     reportView.keys.append('month')
     reportView.keys.append('amount')
