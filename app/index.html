@@ -48,6 +48,7 @@
 
         function f2_search(key){
           f2_hide();
+          $('#f2 #f2_key').html(key);
           $.getJSON('report/' + key + '.json', function (data) {
             f2_print(data);
           });
@@ -106,7 +107,7 @@
             <button id="f2_hide" type="button" class="btn btn-danger btn-xs pull-right">
               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </button>
-            Resultados para "<span>Teste</span>"
+            Resultados para "<span id="f2_key">Teste</span>"
           </div>
           <table class="table table-striped table-condensed">
             <thead>
